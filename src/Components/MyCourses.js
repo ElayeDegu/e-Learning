@@ -11,6 +11,7 @@ const Admin = () => {
   const [updatingCourse, setUpdatingCourse] = useState(null);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [showCreateForm, setShowCreateForm] = useState(false);
+  const [isApproved, setIsApproved] = useState(null);
   
   const updateCourse = (course) => {
     setUpdatingCourse(course);
@@ -18,8 +19,28 @@ const Admin = () => {
   };
 
   useEffect(() => {
-    fetchCourses();
+    checkApprovalStatus();
   }, []);
+
+  const checkApprovalStatus = async () => {
+    try {
+      const userId = localStorage.getItem('userId');
+      if (!userId) throw new Error('No userId found');
+
+      const response = await axios.get('/api/users', {
+        // headers: { Authorization: `Bearer ${token}` },
+        params: { userId }, 
+      });
+
+      setIsApproved(response.data.isapproved);
+
+      if (response.data.isapproved) {
+        fetchCourses(); // Fetch courses only if the user is approved
+      }
+    } catch (error) {
+      console.error('Error checking approval status:', error);
+    }
+  };
 
   const fetchCourses = async () => {
     try {
@@ -63,6 +84,18 @@ const Admin = () => {
   const closeCreateForm = () => {
     setShowCreateForm(false);
   };
+
+  if (isApproved === null) {
+    return <div>Loading...</div>; // Show a loading message while checking approval status
+  }
+  if (!isApproved) {
+    return (
+      <div className="not-approved">
+        <h1 className="not-approved h1">You are not approved yet</h1>
+        <p className="not-approved p">Please wait for admin approval to create courses.</p>
+      </div>
+    );
+  }
 
   return (
     <>

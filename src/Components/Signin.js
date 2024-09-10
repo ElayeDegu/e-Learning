@@ -31,10 +31,10 @@ const Signin = ({ setFormType }) => {
       localStorage.setItem('token', token);
       const userId = data.userID;
       localStorage.setItem('userId', userId);
-      const email = data.Email;
-      localStorage.setItem('Email', email);
+      const Email = data.Email;
+      localStorage.setItem('Email', Email);
       window.location.href = '/';
-      // or use the Link component: <Link href='../dashboard'></Link>
+      
     }
   };
 

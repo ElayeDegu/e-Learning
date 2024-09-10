@@ -79,6 +79,50 @@ export default async function handler(req, res) {
         res.status(400).json({ success: false, error: error.message });
       }
       break;
+      case 'POST':
+        try {
+          const authHeader = req.headers.authorization;
+          if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            return res.status(401).json({ message: 'Authorization token missing or malformed' });
+          }
+    
+          const token = authHeader.split(' ')[1];
+          const decoded = jwt.verify(token, process.env.JWT_SECRET);
+          const userId = decoded.userId; // Assuming the token contains the user ID
+    
+          const { firstName, lastName, gender, bio, dateOfBirth, location, jobTitle, email } = req.body;
+    
+          // Check if a profile for the user already exists
+          const existingProfile = await Profile.findOne({ userId });
+          if (existingProfile) {
+            return res.status(400).json({ message: 'Profile already exists' });
+          }
+    
+          const profile = new Profile({
+            userId,
+            firstName,
+            lastName,
+            gender,
+            bio,
+            dateOfBirth: new Date(dateOfBirth),
+            location,
+            jobTitle,
+            email,
+            avatar: '', // Initially set avatar if provided
+          });
+          const id = profile._id;
+          await profile.save();
+          res.status(201).json({
+            message: 'Profile created successfully',
+            profile,
+            id
+          });
+        } catch (error) {
+          console.error('Profile creation error:', error);
+          res.status(500).json({ message: 'Failed to create profile' });
+        }
+      
+      break;
 
     default:
       res.status(400).json({ success: false });

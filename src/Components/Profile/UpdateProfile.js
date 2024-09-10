@@ -4,7 +4,8 @@ import '../../styles/profile.css';
 
 const UpdateProfile = () => {
   const [profileData, setProfileData] = useState({
-    username: '',
+    firstName: '',
+    lastName: '',
     email: '',
     gender: '',
     dateOfBirth: '',
@@ -48,6 +49,7 @@ const UpdateProfile = () => {
       const token = localStorage.getItem('token');
       const { avatar, ...textData } = profileData;
 
+      console.log('Form data before submission:', textData);
       // If updating the avatar, use FormData
       let response;
       if (avatar) {
@@ -85,11 +87,20 @@ const UpdateProfile = () => {
       {error && <div className="error-message">{error}</div>}
       <form className="profile-card" onSubmit={handleSubmit}>
         <div className="profile-value">
-          <label className="profile-label">Username</label>
+          <label className="profile-label">First Name</label>
           <input
             type="text"
-            name="username"
-            value={profileData.username}
+            name="firstName"
+            value={profileData.firstName}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="profile-value">
+          <label className="profile-label">Last Name</label>
+          <input
+            type="text"
+            name="lastName"
+            value={profileData.lastName}
             onChange={handleChange}
           />
         </div>

@@ -5,7 +5,7 @@ import axios from 'axios';
 import '../styles/dash.css';
 
 
-const Dashboard = () => {
+export default function Dashboard () {
   const [coursesCount, setCoursesCount] = useState(0);
   const [studentsCount, setStudentsCount] = useState(0);
   const [instructorsCount, setInstructorsCount] = useState(0);
@@ -56,4 +56,3 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;

@@ -12,7 +12,7 @@ export default async (req,res) => {
             courseCode,
         })
         await wish.save();
-        return res.status(201).json(newWishlistItem);
+        return res.status(201).json(wish);
 
     } else if(method==='DELETE') {
         const {email, courseCode} = req.body;

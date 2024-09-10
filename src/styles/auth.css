@@ -34,3 +34,35 @@
   .role-field {
     @apply mt-1 p-2 w-full border border-gray-300 rounded-md;
   }
+  /* auth.css */
+.create-form-container {
+  @apply bg-white p-8 rounded-lg shadow-lg max-w-md mx-auto;
+}
+
+.modal {
+  @apply fixed inset-0 flex items-center justify-center bg-black bg-opacity-50;
+}
+
+.create-input-field {
+  @apply w-full p-2 mb-4 border border-gray-300 rounded-md;
+}
+
+.select-field {
+  @apply w-full p-2 mb-4 border border-gray-300 rounded-md;
+}
+
+.textarea-field {
+  @apply w-full p-2 mb-4 border border-gray-300 rounded-md h-24;
+}
+
+.create-submit-button {
+  @apply bg-blue-500 text-white p-2 rounded-md w-full hover:bg-blue-600 transition-colors;
+}
+
+.modal h2 {
+  @apply text-2xl font-bold mb-4 text-center;
+}
+
+.modal form {
+  @apply bg-white p-6 rounded-lg shadow-lg;
+}

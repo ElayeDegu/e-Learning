@@ -1,43 +1,38 @@
 {
   "name": "todo-app",
   "version": "1.0.0",
-  "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
-  "main": "postcss.config.js",
+  "license": "ISC",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
   "dependencies": {
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.5",
     "bcryptjs": "^2.4.3",
     "busboy": "^1.6.0",
+    "chapa": "^1.0.5",
     "client-only": "^0.0.1",
+    "formidable": "^3.5.1",
     "graceful-fs": "^4.2.11",
     "js-tokens": "^4.0.0",
     "jsonwebtoken": "^9.0.2",
     "loose-envify": "^1.4.0",
     "mongoose": "^8.5.4",
+    "multer": "^1.4.5-lts.1",
     "next": "^14.2.6",
+    "next-connect": "^1.0.0",
     "nodemailer": "^6.9.14",
     "picocolors": "^1.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.3.0",
+    "react-multi-carousel": "^2.8.5",
     "redis": "^4.7.0",
     "streamsearch": "^1.1.0",
     "tailwindcss": "^3.4.10",
     "tslib": "^2.7.0"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "next dev"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ElayeDegu/todo-app.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ElayeDegu/todo-app/issues"
-  },
-  "homepage": "https://github.com/ElayeDegu/todo-app#readme"
+  }
 }

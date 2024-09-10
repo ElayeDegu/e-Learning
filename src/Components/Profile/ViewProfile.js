@@ -31,8 +31,12 @@ const ViewProfile = () => {
       <h1 className="profile-heading">Account Profile</h1>
       <div className="profile-card">
         <div className="profile-value">
-          <label className="profile-label">Username</label>
-          <p>{profile.username}</p>
+          <label className="profile-label">First Name</label>
+          <p>{profile.firstName}</p>
+        </div>
+        <div className="profile-value">
+          <label className="profile-label">Last Name</label>
+          <p>{profile.lastName}</p>
         </div>
         <div className="profile-value">
           <label className="profile-label">Email</label>

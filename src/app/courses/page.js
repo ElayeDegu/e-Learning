@@ -10,12 +10,14 @@ const Dashboard = () => {
   const [wishlist, setWishlist] = useState([]);
   const [email, setEmail] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
 
     fetchData();
     fetchWishlist();
-  }, []);
+    fetchCartItems();
+  }, [email]);
  
 
   const fetchData = async () => {
@@ -34,8 +36,9 @@ const Dashboard = () => {
   };
 
   const fetchWishlist = async () => {
-    const storedEmail = localStorage.getItem('email');
+    const storedEmail = localStorage.getItem('Email');
     if(storedEmail) {
+      console.log("stored email:",storedEmail)
       setEmail(storedEmail);
       setIsLoggedIn(true);
     }
@@ -44,6 +47,15 @@ const Dashboard = () => {
       setWishlist(response.data);
     } catch (error) {
       console.error('Error fetching wishlist:', error);
+    }
+  };
+  const fetchCartItems = async () => {
+    if (!email) return; 
+    try {
+      const response = await axios.get('/api/cart', { params: { email } });
+      setCartItems(response.data);
+    } catch (error) {
+      console.error('Error fetching cart items:', error);
     }
   };
 
@@ -78,6 +90,31 @@ const Dashboard = () => {
     }
   };
 
+  const handleAddToCart = async (courseId) => {
+    if (!isLoggedIn) {
+      window.location.href = '/signup';
+      return;
+    }
+    // Check if the course is already in the cart
+    if (cartItems.some(item => item.courseId._id === courseId)) {
+      alert("Course is already in the cart.");
+      return;
+    }
+
+    try {
+      await axios.post('/api/cart', {
+        email,
+        courseId,
+        isadded: true,
+      });
+
+      // Fetch updated cart items
+      fetchCartItems();
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+    }
+  };
+
 
   return (
     <>
@@ -106,14 +143,14 @@ const Dashboard = () => {
         }}>
         </div>
         {/* Wishlist Icon */}
-        
-          {console.log(course.image)}
+{/*         
+          {console.log(course.image)} */}
             <p className="text">Course name:{course.courseName}</p>
             <p className="text">Course code:{course.courseCode}</p>
             <p className="text">Instructor name:{course.instructor}</p>
             <p className="text">student List:{course.Std_Eld}</p>
             <div className="add-to-cart-container">
-              <button className="add-to-cart-button">Add to cart</button>
+              <button onClick={() => handleAddToCart(course._id)} className="add-to-cart-button">Add to cart</button>
             </div>
           </div>
         ))}

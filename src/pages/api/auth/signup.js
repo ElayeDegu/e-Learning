@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import User from '../../../models/User';
 import db from '../../../utils/db';
 import Profile from '../../../models/Profile';
@@ -30,25 +31,19 @@ export default async function handler(req, res) {
 
       // Save the user to the database
       await newUser.save();
-
-      // Create a corresponding profile with the user's email
-      const newProfile = new Profile({
-        userId: newUser._id,
-        email: newUser.email,
-      });
-
-      // Save the profile to the database
-      await newProfile.save();
+      const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      const userId = newUser._id;
+      // const email = newUser.email;
       if (isInstructor) {
-        const adminEmail = 'abduibrahim5980@gmail.com'; // Replace with your admin's email
+        const adminEmail = 'danqueen670@gmail.com'; // Replace with your admin's email
         const subject = 'New Instructor Signup';
         const text = `A new instructor has signed up with the email: ${email}.`;
         const html = `<p>A new instructor has signed up with the email: <strong>${email}</strong>.</p>`;
-        await sendEmail(adminEmail, subject, text, html);
+        await sendEmail(adminEmail, subject, text, userId, email);
       }
       
       // Respond with a success message
-      res.status(201).json({ message: 'User and Profile created successfully!' });
+      res.status(201).json({ message: 'User and Profile created successfully!', token });
 
     } catch (error) {
       console.error('Signup error:', error);
