@@ -10,6 +10,10 @@ const enrolmentSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
+  email: {
+    type:String,
+    required:true
+  },
   courseId: [{
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'Course',
@@ -45,7 +49,11 @@ const enrolmentSchema = new mongoose.Schema({
   created_at: {
     type: Date,
     default: Date.now
-  }
+  },
+  isCompleted: {
+    type:Boolean,
+    default: false
+  },
 }, {
   timestamps: false // Disables the automatic `createdAt` and `updatedAt` fields
 });
